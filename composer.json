@@ -1,0 +1,15 @@
+{
+    "name": "oscar/v2-api",
+    "description": "API avec slim",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Oscar S"
+        }
+    ],
+    "require": {
+        "slim/slim": "^4.15",
+        "slim/psr7": "^1.8",
+        "slim/php-view": "^3.4"
+    }
+}
