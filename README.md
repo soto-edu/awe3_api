@@ -1,14 +1,10 @@
-# Version 2 - Utilisation de Slim pour la creation d'une API
+# Version 3 - Utilisation de la version 2 pour créer la documentation OpenApi
 
-Création du projet, je vais pas utiliser le skeleton proposé depuis le site. et on va utilliser au fur à mesure les differentes utilitaires necessaires
 
-Installer le package necessaire, pas besoin de préciser la version
 
 ```bash
-composer init
-composer require slim/slim
-composer require slim/psr7
-composer require slim/php-view
+composer install
+composer require zircote/swagger-php
 ```
 
 Executer le projet
@@ -16,3 +12,6 @@ Executer le projet
 php -S localhost:8080 -t public
 ```
 
+1. On peut ajouter une nouvelle route dans le fichier routes.php
+2. avec son controller `SwaggerController'
+3. Nouvelle page View/swagger.php

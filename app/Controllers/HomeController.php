@@ -9,8 +9,8 @@ class HomeController {
     public function displayHome(Request $request, Response $response, $args) {
         $view = new PhpRenderer(__DIR__ . '/../View');
         $data = [
-            'title' => 'Version 2 API',
-            'description' => 'API avec Slim Framework',
+            'title' => 'Version 3 API',
+            'description' => 'API avec Swagger',
         ];
         return $view->render($response, 'home.php', $data);
     }

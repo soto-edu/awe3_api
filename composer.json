@@ -10,6 +10,7 @@
     "require": {
         "slim/slim": "^4.15",
         "slim/psr7": "^1.8",
-        "slim/php-view": "^3.4"
+        "slim/php-view": "^3.4",
+        "zircote/swagger-php": "^6.0"
     }
 }

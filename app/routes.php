@@ -4,7 +4,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 require_once __DIR__ . '/Controllers/HomeController.php';
 require_once __DIR__ . '/Controllers/ProfileController.php';
-
+require_once __DIR__ . '/Controllers/SwaggerController.php';
 
 return function (App $app) {
     $app->get('/', [HomeController::class, 'displayHome']);
@@ -15,4 +15,6 @@ return function (App $app) {
         $group->post('/profiles', [ProfileController::class, 'createProfile']);
         $group->put('/profiles/{id}', [ProfileController::class, 'updateProfile']);
     });
+    $app->get('/swagger', [SwaggerController::class, 'displaySwaggerUI']);
+    $app->get('/swagger.json', [SwaggerController::class, 'displaySwaggerJson']);
 };

@@ -4,8 +4,29 @@ use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response; 
 
 require_once __DIR__ . '/../Model/profile.php';
+use OpenApi\Attributes as OA;
 
 class ProfileController {
+    #[OA\Get(
+        path: "/api/profiles",
+        tags: ["profiles"],
+        summary: "Get all profiles",
+        responses: [
+            new OA\Response(response: 200, description: "List of profiles", content: new OA\JsonContent(
+                type: 'array',
+                items: new OA\Items(
+                    type: 'object',
+                    properties: [
+                        'id' => new OA\Property(property: 'id', type: 'integer', example: 1),
+                        'first_name' => new OA\Property(property: 'first_name', type: 'string', example: 'John'),
+                        'last_name' => new OA\Property(property: 'last_name', type: 'string', example: 'Doe'),
+                        'email' => new OA\Property(property: 'email', type: 'string', example: 'john.doe@example.com'),
+                        'bio' => new OA\Property(property: 'bio', type: 'string', example: 'Software developer')
+                    ]
+                )
+            ))
+        ]
+    )]
     public function getAllProfiles(Request $request, Response $response, $args) {
         $profileModel = new ProfileModel();
         $profiles = $profileModel->getAllProfiles();
@@ -14,6 +35,37 @@ class ProfileController {
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
+    #[OA\Get(
+        path: "/api/profiles/{id}",
+        tags: ["profiles"],
+        summary: "Get a profile by ID",
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'Profile ID',
+                schema: new OA\Schema(type: 'integer', example: 1)
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Profile found",
+                content: new OA\JsonContent(
+                    type: 'object',
+                    properties: [
+                        'id' => new OA\Property(property: 'id', type: 'integer', example: 1),
+                        'first_name' => new OA\Property(property: 'first_name', type: 'string', example: 'John'),
+                        'last_name' => new OA\Property(property: 'last_name', type: 'string', example: 'Doe'),
+                        'email' => new OA\Property(property: 'email', type: 'string', example: 'john.doe@example.com'),
+                        'bio' => new OA\Property(property: 'bio', type: 'string', example: 'Software developer')
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: "Profile not found")
+        ]
+    )]
     public function getProfileById(Request $request, Response $response, $args) {
         $id = $args['id'];
 
@@ -30,6 +82,42 @@ class ProfileController {
         }
     }
 
+    #[OA\Post(
+        path: "/api/profiles",
+        tags: ["profiles"],
+        summary: "Create a new profile",
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                type: 'object',
+                required: ['first_name', 'last_name', 'email', 'bio'],
+                properties: [
+                    'first_name' => new OA\Property(property: 'first_name', type: 'string', example: 'John'),
+                    'last_name' => new OA\Property(property: 'last_name', type: 'string', example: 'Doe'),
+                    'email' => new OA\Property(property: 'email', type: 'string', format: 'email', example: 'john.doe@example.com'),
+                    'bio' => new OA\Property(property: 'bio', type: 'string', example: 'Software developer')
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: "Profile created successfully",
+                content: new OA\JsonContent(
+                    type: 'object',
+                    properties: [
+                        'id' => new OA\Property(property: 'id', type: 'integer', example: 1),
+                        'first_name' => new OA\Property(property: 'first_name', type: 'string', example: 'John'),
+                        'last_name' => new OA\Property(property: 'last_name', type: 'string', example: 'Doe'),
+                        'email' => new OA\Property(property: 'email', type: 'string', example: 'john.doe@example.com'),
+                        'bio' => new OA\Property(property: 'bio', type: 'string', example: 'Software developer')
+                    ]
+                )
+            ),
+            new OA\Response(response: 400, description: "Bad request - validation error"),
+            new OA\Response(response: 500, description: "Internal server error")
+        ]
+    )]
     public function createProfile(Request $request, Response $response, $args) {
         
         $body = $request->getBody()->getContents();
@@ -68,6 +156,49 @@ class ProfileController {
         }
     }
 
+    #[OA\Put(
+        path: "/api/profiles/{id}",
+        tags: ["profiles"],
+        summary: "Update a profile",
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'Profile ID',
+                schema: new OA\Schema(type: 'integer', example: 1)
+            )
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                type: 'object',
+                properties: [
+                    'first_name' => new OA\Property(property: 'first_name', type: 'string', example: 'John'),
+                    'last_name' => new OA\Property(property: 'last_name', type: 'string', example: 'Doe'),
+                    'email' => new OA\Property(property: 'email', type: 'string', format: 'email', example: 'john.doe@example.com'),
+                    'bio' => new OA\Property(property: 'bio', type: 'string', example: 'Software developer')
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Profile updated successfully",
+                content: new OA\JsonContent(
+                    type: 'object',
+                    properties: [
+                        'id' => new OA\Property(property: 'id', type: 'integer', example: 1),
+                        'first_name' => new OA\Property(property: 'first_name', type: 'string', example: 'John'),
+                        'last_name' => new OA\Property(property: 'last_name', type: 'string', example: 'Doe'),
+                        'email' => new OA\Property(property: 'email', type: 'string', example: 'john.doe@example.com'),
+                        'bio' => new OA\Property(property: 'bio', type: 'string', example: 'Software developer')
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: "Profile not found")
+        ]
+    )]
     public function updateProfile(Request $request, Response $response, $args) {
         $id = $args['id'];
         $profileModel = new ProfileModel();
@@ -77,7 +208,8 @@ class ProfileController {
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
         }else{
-            $input = $request->getParsedBody();
+            $body = $request->getBody()->getContents();
+            $input = json_decode($body, true);
             $profile = $profileModel->updateProfile($id, $input);            
             $payload = json_encode($profile);
             $response->getBody()->write($payload);
