@@ -1,4 +1,4 @@
-# Version 4 - Utilisation de la version 3 pour faire l'autentification de l'api
+# Version 4 - Utilisation de la version 3 pour faire l'Authentification de l'api
 
 
 
