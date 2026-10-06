@@ -1,10 +1,9 @@
-# Version 3 - Utilisation de la version 2 pour créer la documentation OpenApi
+# Version 4 - Utilisation de la version 3 pour faire l'autentification de l'api
 
 
 
 ```bash
 composer install
-composer require zircote/swagger-php
 ```
 
 Executer le projet
@@ -12,6 +11,7 @@ Executer le projet
 php -S localhost:8080 -t public
 ```
 
-1. On peut ajouter une nouvelle route dans le fichier routes.php
-2. avec son controller `SwaggerController'
-3. Nouvelle page View/swagger.php
+## Swagger - Authorize (Bearer)
+
+Les endpoints peuvent être marqués comme sécurisés via OpenAPI (`security: [["bearerAuth" => []]]`).
+Dans Swagger UI (`/swagger`), tu peux ensuite cliquer sur **Authorize** et saisir ton token JWT (sans le préfixe `Bearer`).

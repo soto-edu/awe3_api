@@ -6,8 +6,12 @@ use OpenApi\Attributes as OA;
 use OpenApi\Generator;
 use Slim\Views\PhpRenderer;
 
-// #[OA\Info(title: "API V3 Documentation", version: "1.0.0")]
-// #[OA\Server(url: "http://localhost:8080")]
+#[OA\SecurityScheme(
+    securityScheme: "bearerAuth",
+    type: "http",
+    scheme: "bearer",
+    bearerFormat: "JWT"
+)]
 
 class SwaggerController {
 

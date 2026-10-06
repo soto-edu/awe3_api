@@ -11,6 +11,7 @@ class ProfileController {
         path: "/api/profiles",
         tags: ["profiles"],
         summary: "Get all profiles",
+        security: [["bearerAuth" => []]],
         responses: [
             new OA\Response(response: 200, description: "List of profiles", content: new OA\JsonContent(
                 type: 'array',
@@ -39,6 +40,7 @@ class ProfileController {
         path: "/api/profiles/{id}",
         tags: ["profiles"],
         summary: "Get a profile by ID",
+        security: [["bearerAuth" => []]],
         parameters: [
             new OA\Parameter(
                 name: 'id',
@@ -86,6 +88,7 @@ class ProfileController {
         path: "/api/profiles",
         tags: ["profiles"],
         summary: "Create a new profile",
+        security: [["bearerAuth" => []]],
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
@@ -160,6 +163,7 @@ class ProfileController {
         path: "/api/profiles/{id}",
         tags: ["profiles"],
         summary: "Update a profile",
+        security: [["bearerAuth" => []]],
         parameters: [
             new OA\Parameter(
                 name: 'id',
